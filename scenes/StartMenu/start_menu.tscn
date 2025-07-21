@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://ylgdc58j43np"]
+
+[ext_resource type="Script" uid="uid://ct6qk4wn1q12s" path="res://scenes/StartMenu/start_menu.gd" id="1_ia0g5"]
+[ext_resource type="Theme" uid="uid://b7e3pawc0vql0" path="res://Defualt.tres" id="3_hte8i"]
+[ext_resource type="Texture2D" uid="uid://ctqj1vcw7kopy" path="res://assets/mockup.jpg" id="3_jgpk7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ia0g5"]
+atlas = ExtResource("3_jgpk7")
+
+[node name="StartMenu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("1_ia0g5")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.83696, 3.83696)
+texture = SubResource("AtlasTexture_ia0g5")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -150.0
+offset_right = -22.0
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(47.76, 25.92)
+color = Color(0, 0, 0, 0.588235)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(300, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="start" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_hte8i")
+text = "Let's Start"
+
+[node name="exit" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_hte8i")
+text = "Exit"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/start" to="CanvasLayer" method="start_game"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/exit" to="CanvasLayer" method="exit"]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://s1kwqnh317u2"]
+
+[ext_resource type="Texture2D" uid="uid://chx4kn6asjs8v" path="res://assets/grids/square_size.png" id="1_wu8hf"]
+[ext_resource type="Shader" uid="uid://c8ji2wgmvft4q" path="res://resources/shaders/lighting.gdshader" id="2_i04kt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1upy"]
+shader = ExtResource("2_i04kt")
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_0h42k"]
+points = PackedVector2Array(12.3744, 15.9099, 34.2947, -51.2653, -32.8805, -29.3449, -55.5079, 38.5373)
+
+[node name="Building" type="Node2D"]
+
+[node name="Pivot" type="Marker2D" parent="."]
+
+[node name="base_grid" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
+texture = ExtResource("1_wu8hf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_r1upy")
+position = Vector2(1, -31)
+region_enabled = true
+region_rect = Rect2(40, 40, 120, 112)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(3.5, 12)
+rotation = 0.785398
+shape = SubResource("ConvexPolygonShape2D_0h42k")

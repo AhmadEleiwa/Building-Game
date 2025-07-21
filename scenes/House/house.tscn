@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://cea8n8ytxd1jv"]
+
+[ext_resource type="PackedScene" uid="uid://s1kwqnh317u2" path="res://scenes/Building/building.tscn" id="1_0h42k"]
+[ext_resource type="Texture2D" uid="uid://dbqqfu2xxcmae" path="res://assets/buildings/small_house/small-roof-house.png" id="1_2whkc"]
+[ext_resource type="Shader" uid="uid://c8ji2wgmvft4q" path="res://resources/shaders/lighting.gdshader" id="2_mapfg"]
+[ext_resource type="Texture2D" uid="uid://boyluspksovhf" path="res://assets/buildings/small_house/small-roof-house_n.png" id="3_pgi2r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gmrls"]
+shader = ExtResource("2_mapfg")
+shader_parameter/normal_map = ExtResource("3_pgi2r")
+
+[node name="House" instance=ExtResource("1_0h42k")]
+
+[node name="base_grid" parent="." index="1"]
+visible = false
+
+[node name="Sprite2D" parent="." index="2"]
+material = SubResource("ShaderMaterial_gmrls")
+position = Vector2(-1, -38)
+texture = ExtResource("1_2whkc")

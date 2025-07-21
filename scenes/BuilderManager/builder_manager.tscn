@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://bee3m6gexhvfm"]
+
+[ext_resource type="Script" uid="uid://cdmotfjbyrjnx" path="res://scenes/BuilderManager/builder_manager.gd" id="1_r0277"]
+[ext_resource type="Texture2D" uid="uid://chx4kn6asjs8v" path="res://assets/grids/square_size.png" id="1_rvmpd"]
+[ext_resource type="Texture2D" uid="uid://cxde62xidjetx" path="res://assets/grids/square_size_red.png" id="3_1svwr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ek53w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rvmpd")
+}],
+"loop": true,
+"name": &"can_build",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1svwr")
+}],
+"loop": true,
+"name": &"cant_build",
+"speed": 5.0
+}]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_r0277"]
+points = PackedVector2Array(11.6673, 15.2028, 33.5876, -50.5581, -32.1734, -28.6378, -54.8008, 37.8302)
+
+[node name="Builder Manager" type="Node2D"]
+process_mode = 1
+script = ExtResource("1_r0277")
+
+[node name="base_grid" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ek53w")
+animation = &"can_build"
+autoplay = "can_build"
+
+[node name="Area2D" type="Area2D" parent="base_grid"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="base_grid/Area2D"]
+position = Vector2(3.5, 12)
+rotation = 0.785398
+shape = SubResource("ConvexPolygonShape2D_r0277")
+
+[node name="Pivot" type="Marker2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Container" type="FlowContainer" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = 180.0
+offset_right = 8.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Container"]
+layout_mode = 2
+text = "You cant build there!"
+horizontal_alignment = 1
+
+[connection signal="area_entered" from="base_grid/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="area_exited" from="base_grid/Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="base_grid/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="base_grid/Area2D" to="." method="_on_area_2d_body_exited"]

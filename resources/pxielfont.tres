@@ -1,0 +1,9 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://sls3hnjh6fas"]
+
+[ext_resource type="FontFile" uid="uid://b7u22biboslex" path="res://assets/fonts/Minecraft.ttf" id="1_iel83"]
+
+[resource]
+base_font = ExtResource("1_iel83")
+opentype_features = {
+1667329140: 0
+}
