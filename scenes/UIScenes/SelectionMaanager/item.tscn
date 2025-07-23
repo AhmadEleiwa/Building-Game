@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx0ewm4v2hjbi"]
+
+[ext_resource type="Texture2D" uid="uid://dodtkrok2efp5" path="res://assets/NPC/char_a_p1_0bas_humn_v00.png" id="1_6xkgl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8d0m"]
+atlas = ExtResource("1_6xkgl")
+region = Rect2(16, 8, 32, 40)
+
+[node name="NPC" type="Button"]
+custom_minimum_size = Vector2(150, 150)
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="house preview" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_v8d0m")
+expand_mode = 3
+stretch_mode = 5

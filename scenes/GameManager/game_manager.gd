@@ -7,13 +7,15 @@ const STRUCTURES_REQUIRMENTS = {
 	"Farm": {"wood": 100, "food":50, "required_buildings":["Storage"]},
 }
 var buildings = []
-var buildings_coords:Array[Vector2i] =  [Vector2i(-13, 4), Vector2i(0, 8)];
+var buildings_coords:Array[Vector2i] = []
 var building_states = {
 	"House":{"number":0},
 	"Storage":{"number":0},
 	"WoodCutter":{"number":0},
 	"Farm":{"number":0}
 }
+var npc: Array[CharacterBody2D] = []
+var selected_npc: Array[CharacterBody2D] = []
 enum StrucutureState{
 	CONSTRUCTION,
 	SELECTION
@@ -61,7 +63,7 @@ func is_strucutures_match_requirment(structure_name:String) -> Dictionary :
 	if structure['wood'] != 0 and  structure['wood']  > CurrentFood:
 		text += " and "+ str(structure['wood'] -CurrentFood)  + "woods"
 	return  {"message": "This building require: " + text, 'status':false}
-	
+	"res://scenes/GameScene/node_2d.tscn"
 func construct(structure_name:String):
 	if is_building_exist(structure_name):
 		lose_food(STRUCTURES_REQUIRMENTS[structure_name]['food'])
@@ -70,9 +72,13 @@ func construct(structure_name:String):
 
 func add_building(building:Building, coords:Vector2i):
 	buildings.append(building)
-	buildings_coords.append(coords)
-	buildings_coords.append(Vector2i(coords.x-1, coords.y))
-	buildings_coords.append(Vector2i(coords.x, coords.y-1))
-	buildings_coords.append(Vector2i(coords.x-1, coords.y-1))
+	
+	var size= building.get_node('base_grid').global_scale
+	print(size)
+	for x in range(0, size.x+1,1):
+		for y in range(0, size.y+1,1):
+			var coord = Vector2i(coords.x -x, coords.y-y)
+			buildings_coords.append(coord)
+	print(buildings_coords)
 	on_construct_buidling.emit()
 		

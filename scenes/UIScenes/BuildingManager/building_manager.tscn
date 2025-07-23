@@ -1,69 +1,48 @@
-[gd_scene load_steps=10 format=3 uid="uid://dh5a6x8hfp5y6"]
+[gd_scene load_steps=9 format=3 uid="uid://dh5a6x8hfp5y6"]
 
-[ext_resource type="Theme" uid="uid://b7e3pawc0vql0" path="res://Defualt.tres" id="1_ed8f8"]
 [ext_resource type="Texture2D" uid="uid://dbqqfu2xxcmae" path="res://assets/buildings/small_house/small-roof-house.png" id="3_ts470"]
 [ext_resource type="Texture2D" uid="uid://wgme1r1iuhtq" path="res://assets/buildings/storage/storage.png" id="4_ed8f8"]
 [ext_resource type="Texture2D" uid="uid://desutftfappfj" path="res://assets/buildings/woodcutter/woodcutting.png" id="4_nv3xc"]
 [ext_resource type="Texture2D" uid="uid://c7x0g5a0i66t1" path="res://assets/wheat/wheat.png" id="5_vcvni"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ta34k"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ed8f8"]
 atlas = ExtResource("3_ts470")
 region = Rect2(40, 40, 120, 112)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0dswa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcvni"]
 atlas = ExtResource("4_nv3xc")
 region = Rect2(48, 48, 104, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vcvni"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ts470"]
 atlas = ExtResource("4_ed8f8")
 region = Rect2(24, 24, 152, 136)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ts470"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nv3xc"]
 atlas = ExtResource("5_vcvni")
 region = Rect2(296, 0, 96, 56)
 
-[node name="BuilderManager" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 495.0
-offset_top = 860.0
-offset_right = 1495.0
-offset_bottom = 1060.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Panel" type="Panel" parent="."]
-layout_direction = 4
-layout_mode = 1
+[node name="ScrollContainer2" type="ScrollContainer"]
+custom_minimum_size = Vector2(1000, 200)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_ed8f8")
-
-[node name="ScrollContainer2" type="ScrollContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_right = -20.0
+offset_right = -920.0
+offset_bottom = -568.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="House" type="Button" parent="Panel/ScrollContainer2/HBoxContainer"]
+[node name="House" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 
-[node name="house preview" type="TextureRect" parent="Panel/ScrollContainer2/HBoxContainer/House"]
+[node name="house preview" type="TextureRect" parent="HBoxContainer/House"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -71,44 +50,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_ta34k")
+texture = SubResource("AtlasTexture_ed8f8")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Padding" type="TextureRect" parent="Panel/ScrollContainer2/HBoxContainer"]
+[node name="Padding" type="TextureRect" parent="HBoxContainer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="WoodCutter" type="Button" parent="Panel/ScrollContainer2/HBoxContainer"]
+[node name="WoodCutter" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="house preview" type="TextureRect" parent="Panel/ScrollContainer2/HBoxContainer/WoodCutter"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1, 1.093)
-texture = SubResource("AtlasTexture_0dswa")
-expand_mode = 2
-stretch_mode = 3
-
-[node name="Padding2" type="TextureRect" parent="Panel/ScrollContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(10, 0)
-layout_mode = 2
-
-[node name="Storage" type="Button" parent="Panel/ScrollContainer2/HBoxContainer"]
-custom_minimum_size = Vector2(150, 150)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="house preview" type="TextureRect" parent="Panel/ScrollContainer2/HBoxContainer/Storage"]
+[node name="house preview" type="TextureRect" parent="HBoxContainer/WoodCutter"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 anchors_preset = 15
@@ -121,13 +77,17 @@ texture = SubResource("AtlasTexture_vcvni")
 expand_mode = 2
 stretch_mode = 3
 
-[node name="Farm" type="Button" parent="Panel/ScrollContainer2/HBoxContainer"]
+[node name="Padding2" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Storage" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="house preview" type="TextureRect" parent="Panel/ScrollContainer2/HBoxContainer/Farm"]
+[node name="house preview" type="TextureRect" parent="HBoxContainer/Storage"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 anchors_preset = 15
@@ -137,5 +97,24 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1, 1.093)
 texture = SubResource("AtlasTexture_ts470")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Farm" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="house preview" type="TextureRect" parent="HBoxContainer/Farm"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.093)
+texture = SubResource("AtlasTexture_nv3xc")
 expand_mode = 2
 stretch_mode = 3

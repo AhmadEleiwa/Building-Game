@@ -23,13 +23,9 @@ texture = ExtResource("1_wu8hf")
 material = SubResource("ShaderMaterial_r1upy")
 position = Vector2(1, -31)
 
-[node name="Area2D" type="Area2D" parent="." groups=["building"]]
+[node name="Area2D" type="Area2D" parent="." groups=["building", "npc"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(3.5, 12)
 rotation = 0.785398
 shape = SubResource("ConvexPolygonShape2D_0h42k")
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-vertices = PackedVector2Array(0, 32, 63, 0, 0, -32, -63, 0)
-affect_navigation_mesh = true

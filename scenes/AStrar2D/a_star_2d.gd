@@ -67,3 +67,7 @@ func disable_tiles_at(coords: Array[Vector2i]) -> void:
 	for coord in coords:
 		if astar.region.has_point(coord):
 			astar.set_point_solid(coord, true)
+func enable_tiles_at(coords: Array[Vector2i]) -> void:
+	for coord in coords:
+		if astar.region.has_point(coord):
+			astar.set_point_solid(coord, false)

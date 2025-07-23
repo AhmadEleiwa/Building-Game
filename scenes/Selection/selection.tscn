@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4dt0iv4v0tg6"]
+
+[ext_resource type="Script" uid="uid://b1gwgi18rmdek" path="res://scenes/Selection/selection.gd" id="1_1llce"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_na057"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1llce"]
+radius = 3.16228
+
+[node name="Selection" type="Area2D"]
+script = ExtResource("1_1llce")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_na057")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+pivot_offset = Vector2(10, 10)
+color = Color(0, 0.611765, 0.627451, 0.4)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1llce")

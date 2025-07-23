@@ -194,9 +194,10 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0c0is"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_0c0is"]
+radius = 15.2971
 
-[node name="NPC" type="CharacterBody2D"]
+[node name="NPC" type="CharacterBody2D" groups=["npc"]]
 script = ExtResource("1_0c0is")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -204,10 +205,6 @@ sprite_frames = SubResource("SpriteFrames_a5kf1")
 animation = &"moving_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_0c0is")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 2.0
-target_desired_distance = 2.0
-simplify_path = true
-debug_enabled = true
+process_mode = 1
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_0c0is")
