@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cea8n8ytxd1jv"]
+[gd_scene load_steps=7 format=3 uid="uid://cea8n8ytxd1jv"]
 
 [ext_resource type="PackedScene" uid="uid://s1kwqnh317u2" path="res://scenes/Building/building.tscn" id="1_0h42k"]
 [ext_resource type="Texture2D" uid="uid://dbqqfu2xxcmae" path="res://assets/buildings/small_house/small-roof-house.png" id="1_2whkc"]
@@ -9,12 +9,23 @@
 shader = ExtResource("2_mapfg")
 shader_parameter/normal_map = ExtResource("3_pgi2r")
 
-[node name="House" instance=ExtResource("1_0h42k")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_mapfg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2whkc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[node name="base_grid" parent="." index="1"]
-visible = false
+[node name="House" instance=ExtResource("1_0h42k")]
 
 [node name="Sprite2D" parent="." index="2"]
 material = SubResource("ShaderMaterial_gmrls")
-position = Vector2(-1, -38)
-texture = ExtResource("1_2whkc")
+position = Vector2(-2, -27)
+sprite_frames = SubResource("SpriteFrames_mapfg")
+autoplay = "default"
+
+[node name="CollisionShape2D" parent="Area2D" index="0" groups=["building"]]

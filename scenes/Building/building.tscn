@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://s1kwqnh317u2"]
+[gd_scene load_steps=6 format=3 uid="uid://s1kwqnh317u2"]
 
+[ext_resource type="Script" uid="uid://btdhw1vofgvse" path="res://scenes/Building/building.gd" id="1_r1upy"]
 [ext_resource type="Texture2D" uid="uid://chx4kn6asjs8v" path="res://assets/grids/square_size.png" id="1_wu8hf"]
 [ext_resource type="Shader" uid="uid://c8ji2wgmvft4q" path="res://resources/shaders/lighting.gdshader" id="2_i04kt"]
 
@@ -9,7 +10,8 @@ shader = ExtResource("2_i04kt")
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_0h42k"]
 points = PackedVector2Array(12.3744, 15.9099, 34.2947, -51.2653, -32.8805, -29.3449, -55.5079, 38.5373)
 
-[node name="Building" type="Node2D"]
+[node name="Building" type="Node2D" groups=["building"]]
+script = ExtResource("1_r1upy")
 
 [node name="Pivot" type="Marker2D" parent="."]
 
@@ -17,15 +19,17 @@ points = PackedVector2Array(12.3744, 15.9099, 34.2947, -51.2653, -32.8805, -29.3
 position = Vector2(-1, 0)
 texture = ExtResource("1_wu8hf")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_r1upy")
 position = Vector2(1, -31)
-region_enabled = true
-region_rect = Rect2(40, 40, 120, 112)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["building"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(3.5, 12)
 rotation = 0.785398
 shape = SubResource("ConvexPolygonShape2D_0h42k")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+vertices = PackedVector2Array(0, 32, 63, 0, 0, -32, -63, 0)
+affect_navigation_mesh = true

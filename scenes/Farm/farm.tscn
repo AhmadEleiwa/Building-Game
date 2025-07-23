@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://b7hfbnncyu0bo"]
+
+[ext_resource type="PackedScene" uid="uid://s1kwqnh317u2" path="res://scenes/Building/building.tscn" id="1_nbnw7"]
+[ext_resource type="Texture2D" uid="uid://c7x0g5a0i66t1" path="res://assets/wheat/wheat.png" id="2_7am5e"]
+[ext_resource type="Script" uid="uid://mitqn45d4l07" path="res://scenes/Farm/farm.gd" id="2_a764d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a764d"]
+atlas = ExtResource("2_7am5e")
+region = Rect2(0, 0, 98, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qpyb"]
+atlas = ExtResource("2_7am5e")
+region = Rect2(98, 0, 98, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dt1o"]
+atlas = ExtResource("2_7am5e")
+region = Rect2(196, 0, 98, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbnw7"]
+atlas = ExtResource("2_7am5e")
+region = Rect2(294, 0, 98, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7am5e"]
+atlas = ExtResource("2_7am5e")
+region = Rect2(392, 0, 98, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rjue"]
+atlas = ExtResource("2_7am5e")
+region = Rect2(490, 0, 98, 53)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3rjue"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a764d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qpyb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dt1o")
+}],
+"loop": true,
+"name": &"lvl1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbnw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7am5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rjue")
+}],
+"loop": true,
+"name": &"lvl2",
+"speed": 5.0
+}]
+
+[node name="Farm" instance=ExtResource("1_nbnw7")]
+script = ExtResource("2_a764d")
+current_stage = 0
+growth_time = 10
+
+[node name="Sprite2D" parent="." index="2"]
+position = Vector2(0, -3)
+sprite_frames = SubResource("SpriteFrames_3rjue")
+animation = &"lvl2"
+autoplay = "lvl1"
+frame_progress = 0.0915123
+
+[node name="CollisionShape2D" parent="Area2D" index="0" groups=["building"]]
