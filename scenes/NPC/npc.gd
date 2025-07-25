@@ -11,6 +11,7 @@ class_name NPC
 enum Tasks{
 	IDLE,
 	WOOD_CUTEER,
+	FARMER
 }
 @export var current_task:Tasks= Tasks.IDLE
 func _ready() -> void:
@@ -50,7 +51,6 @@ func is_npc_moving() -> bool:
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
 	# You can use this instead of manual movement if you prefer:
-	print(safe_velocity)
 	velocity = safe_velocity
 	move_and_slide()
 func find_closest_tree() -> Vector2:

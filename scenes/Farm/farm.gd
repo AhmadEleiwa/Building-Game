@@ -1,5 +1,5 @@
 extends Building
-
+class_name Farm
 const EALRY_STAGE = 0;
 const LATE_STAGE = 1;
 

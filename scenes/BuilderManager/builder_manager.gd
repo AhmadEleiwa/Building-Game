@@ -25,7 +25,7 @@ func _input(event) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if  can_build == true and selected != null:
 				GameManager.construct(structure_name)
-				var coord = tileMap.local_to_map(tileMap.to_local(selected.global_position))
+				var coord = tileMap.local_to_map(tileMap.to_local(base_grid.global_position))
 				GameManager.add_building(selected,coord)
 				selected.changeState(GameManager.StrucutureState.CONSTRUCTION)
 				selected.get_node('Area2D').get_node('CollisionShape2D').disabled  = false
@@ -44,7 +44,7 @@ func _process(delta):
 	if selected != null:
 		base_grid.show()
 		base_grid.position = world_pos - $Pivot.position
-		selected.position = world_pos
+		selected.position = world_pos- $Pivot.position
 	else:
 		base_grid.hide()
 		
@@ -59,8 +59,7 @@ func build(struct_name:String ):
 	selected.get_node('Area2D').get_node('CollisionShape2D').disabled  = true
 	base_grid.scale = selected.get_node('Area2D').scale
 	selected.get_node('base_grid').hide()
-	var pivot = selected.get_node("Pivot")
-	selected.position = tileMap.map_to_local(get_tile_under_mouse(tileMap)) - pivot.position
+	selected.position = tileMap.map_to_local(get_tile_under_mouse(tileMap))
 	target.add_child(selected)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

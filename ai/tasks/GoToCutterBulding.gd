@@ -7,8 +7,7 @@ func _tick(delta: float) -> Status:
 	if agent.work_at_building is not WoodCutter:
 		return RUNNING
 	agent.set_target(agent.work_at_building.global_position)	
-	if agent.nav_agent.is_navigation_finished() and agent.nav_agent.distance_to_target() < 64:
+	if agent.nav_agent.is_navigation_finished() and agent.nav_agent.distance_to_target() < 64 and not GameManager.is_storage_full():
 		
 		return SUCCESS
-	print("waiting woodcutter be constructed")
 	return RUNNING

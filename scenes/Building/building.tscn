@@ -8,27 +8,25 @@
 shader = ExtResource("2_i04kt")
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_0h42k"]
-points = PackedVector2Array(12.3744, 15.9099, 34.2947, -51.2653, -33.5876, -28.6378, -55.5079, 38.5373)
+points = PackedVector2Array(10.6066, 16.2635, 32.5269, -49.4975, -33.234, -27.5772, -55.8614, 38.8909)
 
 [node name="Building" type="Node2D" groups=["building"]]
 script = ExtResource("1_r1upy")
 
-[node name="Pivot" type="Marker2D" parent="."]
-position = Vector2(0, 32)
-
 [node name="base_grid" type="Sprite2D" parent="."]
-position = Vector2(-1, 0)
+modulate = Color(1, 0.454902, 0.811765, 1)
 texture = ExtResource("1_wu8hf")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_r1upy")
-position = Vector2(1, -31)
+position = Vector2(1, -32)
+offset = Vector2(-1, 31)
 
 [node name="Area2D" type="Area2D" parent="." groups=["building", "npc"]]
-collision_layer = 256
-collision_mask = 256
+collision_layer = 15
+collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(3.5, 12)
+position = Vector2(5, 12)
 rotation = 0.785398
 shape = SubResource("ConvexPolygonShape2D_0h42k")

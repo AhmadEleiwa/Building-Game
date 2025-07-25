@@ -24,20 +24,14 @@ animations = [{
 [node name="WoodCutter" instance=ExtResource("1_om6d5")]
 script = ExtResource("2_8u47m")
 
-[node name="Pivot" parent="." index="0"]
-position = Vector2(-24, -19)
-
-[node name="Sprite2D" parent="." index="2"]
+[node name="Sprite2D" parent="." index="1"]
 material = SubResource("ShaderMaterial_mn1q6")
-position = Vector2(1, -19)
+position = Vector2(1, -16)
 sprite_frames = SubResource("SpriteFrames_7wafd")
 autoplay = "default"
+offset = Vector2(0, 0)
 
 [node name="CollisionShape2D" parent="Area2D" index="0" groups=["building"]]
-
-[node name="NavigationObstacle2D" parent="." index="4"]
-position = Vector2(1, -5)
-vertices = PackedVector2Array(-1, 22, 39, 1, -1, -20, -43, 2)
-avoidance_enabled = false
+position = Vector2(5, 12)
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

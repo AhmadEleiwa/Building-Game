@@ -24,16 +24,18 @@ animations = [{
 }]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_r0277"]
-points = PackedVector2Array(11.6673, 15.2028, 33.5876, -50.5581, -32.1734, -28.6378, -54.8008, 37.8302)
+points = PackedVector2Array(11.6673, 16.617, 34.2947, -51.2652, -33.5876, -28.6378, -56.9221, 39.9515)
 
 [node name="Builder Manager" type="Node2D"]
 process_mode = 1
 script = ExtResource("1_r0277")
 
 [node name="base_grid" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_ek53w")
 animation = &"can_build"
 autoplay = "can_build"
+offset = Vector2(-1, 0)
 
 [node name="Area2D" type="Area2D" parent="base_grid"]
 
@@ -43,6 +45,7 @@ rotation = 0.785398
 shape = SubResource("ConvexPolygonShape2D_r0277")
 
 [node name="Pivot" type="Marker2D" parent="."]
+position = Vector2(0, 16)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

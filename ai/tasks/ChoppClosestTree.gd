@@ -8,7 +8,6 @@ func _tick(delta: float) -> Status:
 		return FAILURE
 	var tile_pos = agent.tree_tilemap.local_to_map(blackboard.get_var(closest_tree))
 	var tile_id = agent.tree_tilemap.get_cell_source_id( tile_pos)
-	print("hi")
 	if tile_id == -1:
 		return FAILURE
 	

@@ -4,16 +4,12 @@ extends Area2D
 @onready var collision_shape_2d_2: CollisionShape2D = $CollisionShape2D2
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
-
 var start_pos := Vector2.ZERO
 var dragging := false
 @export var enable_filtering:bool = true
 @export var is_in_group:String = "npc"
 @export var raycast_areas :bool = false
 @export var raycast_bodies:bool = true
-
-
-
 
 signal selected(selections:Array[Node2D])
 func _unhandled_input(event):
@@ -25,10 +21,8 @@ func _unhandled_input(event):
 				collision_shape_2d.disabled= false
 				collision_shape_2d_2.global_position = start_pos
 				select_npcs()
-				
 				dragging = true
 				show()
-				
 				color_rect.global_position = start_pos
 				color_rect.size = Vector2.ZERO
 			else:

@@ -1,13 +1,14 @@
-[gd_resource type="BehaviorTree" load_steps=26 format=3 uid="uid://bpfa17r6rbkca"]
+[gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://bpfa17r6rbkca"]
 
 [ext_resource type="Script" uid="uid://day60tatxvs6x" path="res://ai/tasks/GetClosestTree.gd" id="1_2b0tu"]
 [ext_resource type="Script" uid="uid://ckqbiy28ij6uh" path="res://ai/tasks/IsTileMapNoNull.gd" id="1_so0uu"]
-[ext_resource type="Script" uid="uid://cql6lxydlybeq" path="res://ai/tasks/CheckWorkAtBuilding.gd" id="2_1l1bu"]
+[ext_resource type="Script" uid="uid://cql6lxydlybeq" path="res://ai/tasks/CheckWoodCutter.gd" id="2_nsq48"]
 [ext_resource type="Script" uid="uid://3ckgv2kxvpx0" path="res://ai/tasks/GoToTree.gd" id="3_387kw"]
 [ext_resource type="Script" uid="uid://bf0eruvgg1cwe" path="res://ai/tasks/ChoppClosestTree.gd" id="4_78wb1"]
 [ext_resource type="Script" uid="uid://cncy5lsdh20y3" path="res://ai/tasks/CheckTreeExist.gd" id="4_khe27"]
 [ext_resource type="Script" uid="uid://dbvay4hx0isfd" path="res://ai/tasks/GoToCutterBulding.gd" id="5_ft6dg"]
 [ext_resource type="Script" uid="uid://bhrn452rbo1mp" path="res://ai/tasks/DeliverWood.gd" id="7_sraln"]
+[ext_resource type="Script" uid="uid://ner5jqgv8mwf" path="res://ai/tasks/CheckFarmer.gd" id="9_u5yni"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_lpdai"]
 
@@ -15,7 +16,7 @@
 script = ExtResource("1_so0uu")
 
 [sub_resource type="BTCondition" id="BTCondition_sraln"]
-script = ExtResource("2_1l1bu")
+script = ExtResource("2_nsq48")
 
 [sub_resource type="BTSequence" id="BTSequence_2b0tu"]
 custom_name = "Checkers"
@@ -42,7 +43,7 @@ script = ExtResource("5_ft6dg")
 
 [sub_resource type="BTAction" id="BTAction_1pv20"]
 script = ExtResource("7_sraln")
-wood_amount = 10
+wood_amount = 100
 
 [sub_resource type="BTSequence" id="BTSequence_khe27"]
 custom_name = "ChoppingProcess"
@@ -64,8 +65,20 @@ children = [SubResource("BTParallel_u5yni")]
 custom_name = "WoodCutting"
 children = [SubResource("BTSequence_2b0tu"), SubResource("BTSequence_so0uu")]
 
+[sub_resource type="BTCondition" id="BTCondition_8txrs"]
+script = ExtResource("9_u5yni")
+
+[sub_resource type="BTSequence" id="BTSequence_nsq48"]
+custom_name = "Checkers"
+children = [SubResource("BTCondition_8txrs")]
+
+[sub_resource type="BTSequence" id="BTSequence_8txrs"]
+
+[sub_resource type="BTSequence" id="BTSequence_u5yni"]
+children = [SubResource("BTSequence_nsq48"), SubResource("BTSequence_8txrs")]
+
 [sub_resource type="BTSelector" id="BTSelector_ft6dg"]
-children = [SubResource("BTSequence_387kw")]
+children = [SubResource("BTSequence_387kw"), SubResource("BTSequence_u5yni")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_10nmm"]
 forever = true

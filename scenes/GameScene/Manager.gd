@@ -6,7 +6,7 @@ extends Node2D
 
 @onready var builder_manager: Node2D = $"Builder Manager"
 
-@onready var ground: TileMapLayer = $ground
+@onready var ground: NavigationTileMapLayer = $ground
 
 
 @onready var panel_2: Panel = $CanvasLayer/Panel
@@ -14,6 +14,7 @@ extends Node2D
 
 
 func _ready():
+	GameManager.on_construct_buidling.connect(on_construct_buidling)
 	# Get all buttons under the VBoxContainer and connect them
 	for button in panel.get_child(0).get_children():
 		var name = button.name
@@ -36,7 +37,7 @@ func _unhandled_input(event):
 				npc.set_target(mouse_pos)
 				npc.current_task = NPC.Tasks.IDLE
 				#navigation_region_2d.bake_navigation_polygon()
-				print(mouse_pos)
+
 
 func _on_selection_selected(selections: Array[Node2D]) -> void:
 	if not selections.is_empty():
@@ -58,3 +59,6 @@ func update_npc_movement(last_pos:Vector2i,current_pos:Vector2i):
 	pass
 	#astar.getAStarGrid2D().set_point_solid(last_pos, false)
 	#astar.getAStarGrid2D().set_point_solid(current_pos)
+func on_construct_buidling(coords:Array[Vector2i]):
+	ground.disable_tiles(coords)
+	

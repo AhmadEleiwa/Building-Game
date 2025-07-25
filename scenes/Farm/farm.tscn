@@ -60,12 +60,12 @@ animations = [{
 }]
 
 [node name="Farm" instance=ExtResource("1_nbnw7")]
+z_as_relative = false
 script = ExtResource("2_a764d")
 current_stage = 0
 growth_time = 10
 
-[node name="Sprite2D" parent="." index="2"]
-position = Vector2(0, -3)
+[node name="Sprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_3rjue")
 animation = &"lvl2"
 autoplay = "lvl1"

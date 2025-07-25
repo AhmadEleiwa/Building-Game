@@ -33,17 +33,22 @@ func get_total_in_stotage()->int:
 	return CurrentFood + CurrentWood
 func is_storage_full()->bool:
 	return StorageCapacity == get_total_in_stotage()
+func get_total_resources() -> int:
+	return CurrentFood + CurrentWood
 
-func add_food( amount:int):
-	if not is_storage_full():
-		CurrentFood =  clamp(CurrentFood + amount,0, StorageCapacity )
-func lose_food( amount:int):
-	CurrentFood = clamp(CurrentFood - amount,0, StorageCapacity )
-func add_wood( amount:int):
-	if not is_storage_full():
-		CurrentWood = clamp(CurrentWood + amount,0, StorageCapacity )
-func lose_wood( amount:int):
-	CurrentWood = clamp(CurrentWood - amount,0, StorageCapacity )
+func add_food(amount: int) -> void:
+	var available_space = StorageCapacity - get_total_resources()
+	CurrentFood += min(amount, available_space)
+
+func lose_food(amount: int) -> void:
+	CurrentFood = max(CurrentFood - amount, 0)
+
+func add_wood(amount: int) -> void:
+	var available_space = StorageCapacity - get_total_resources()
+	CurrentWood += min(amount, available_space)
+
+func lose_wood(amount: int) -> void:
+	CurrentWood = max(CurrentWood - amount, 0)
 
 signal on_construct_buidling(coords:Array[Vector2i])
 ## take structure_name and return a massage and the status
@@ -74,13 +79,13 @@ func add_building(building:Building, coords:Vector2i):
 	buildings.append(building)
 	
 	var size= building.get_node('base_grid').global_scale
-	print(size)
+
 	var coords_to:Array[Vector2i]=  []
-	for x in range(0, size.x+1,1):
-		for y in range(0, size.y+1,1):
-			var coord = Vector2i(coords.x -x, coords.y-y)
+	var new_size = Vector2i(size.x*2, size.y*2)
+	for x in range(0, new_size.x,1):
+		for y in range(0, new_size.y,1):
+			var coord = Vector2i(coords.x -x+size.x-1, coords.y-y+size.y-1)
 			buildings_coords.append(coord)
 			coords_to.append(coord)
-	print(buildings_coords)
 	on_construct_buidling.emit(coords_to)
 		

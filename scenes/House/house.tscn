@@ -22,10 +22,11 @@ animations = [{
 
 [node name="House" instance=ExtResource("1_0h42k")]
 
-[node name="Sprite2D" parent="." index="2"]
+[node name="Sprite2D" parent="." index="1"]
 material = SubResource("ShaderMaterial_gmrls")
-position = Vector2(-2, -27)
+position = Vector2(-1, -27)
 sprite_frames = SubResource("SpriteFrames_mapfg")
 autoplay = "default"
+offset = Vector2(0, 0)
 
 [node name="CollisionShape2D" parent="Area2D" index="0" groups=["building"]]

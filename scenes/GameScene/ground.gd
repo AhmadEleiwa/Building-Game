@@ -1,19 +1,21 @@
 extends TileMapLayer
+class_name NavigationTileMapLayer
 
 @onready var tree_layer: TileMapLayer = $"../Obstacles/Tree Layer"
-@onready var buldings: Node2D = $"../Obstacles/buldings"
 
 
-
-func _use_tile_data_runtime_update(coords: Vector2i) -> bool:
-	
-	if coords in tree_layer.get_used_cells_by_id(4):
-		return true
-	else:
-		return false
-func _tile_data_runtime_update(coords: Vector2i, tile_data: TileData) -> void:
-	print( GameManager.buildings_coords)
-	if coords in tree_layer.get_used_cells_by_id(4):
-		tile_data.set_navigation_polygon(0, null)
-
+func _ready() -> void:
+	for coords in tree_layer.get_used_cells_by_id(4):
+		var alt = get_cell_atlas_coords(coords)
+		set_cell(coords, 0, alt, 0)
 		
+func disable_tile(coord:Vector2i):
+	var alt = get_cell_atlas_coords(coord)
+	set_cell(coord, 0, alt, 0)
+func enable_tile(coord:Vector2i):
+	var alt = get_cell_atlas_coords(coord)
+	set_cell(coord, 0, alt, 0)
+func disable_tiles(coords:Array[Vector2i]):
+	for coord in coords:
+		var alt = get_cell_atlas_coords(coord)
+		set_cell(coord, 0, alt, 0)
