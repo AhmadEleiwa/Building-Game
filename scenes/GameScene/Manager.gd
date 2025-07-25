@@ -1,4 +1,5 @@
 extends Node2D
+
 #@onready var panel: Panel = $CanvasLayer/BuilderManager/Panel
 #@onready var panel: HBoxContainer = $CanvasLayer/BuilderManager/Panel/ScrollContainer2/HBoxContainer
 @onready var panel: ScrollContainer = $CanvasLayer/Panel/CenterContainer/BuilderManager
@@ -6,7 +7,7 @@ extends Node2D
 @onready var builder_manager: Node2D = $"Builder Manager"
 
 @onready var ground: TileMapLayer = $ground
-@onready var astar: AStar2DNode = $AStar2D
+
 
 @onready var panel_2: Panel = $CanvasLayer/Panel
 
@@ -31,19 +32,11 @@ func _unhandled_input(event):
 		var offset = 0
 		for npc in GameManager.selected_npc:
 			var mouse_pos = get_global_mouse_position()
-			var grid_start = ground.local_to_map(npc.global_position)
-			var grid_end = ground.local_to_map(Vector2(mouse_pos.x + offset, mouse_pos.y+offset))
-			offset += 32
-			if astar.getAStarGrid2D().is_in_bounds(grid_end.x, grid_end.y) and astar.getAStarGrid2D().get_point_weight_scale(grid_end) > 0.0:
-				var path = astar.getAStarGrid2D().get_id_path(grid_start, grid_end)
-				if path.size() > 0:
-					npc.set_path(path, ground)
-				else:
-					print("No path found")
-	
-func _on_builder_manager_on_structure_change_state(value:GameManager.StrucutureState) -> void:
-	pass
-
+			if npc is NPC:
+				npc.set_target(mouse_pos)
+				npc.current_task = NPC.Tasks.IDLE
+				#navigation_region_2d.bake_navigation_polygon()
+				print(mouse_pos)
 
 func _on_selection_selected(selections: Array[Node2D]) -> void:
 	if not selections.is_empty():
@@ -56,7 +49,12 @@ func _on_selection_selected(selections: Array[Node2D]) -> void:
 	for select in selections:
 		if select.is_in_group("npc"):
 			GameManager.selected_npc.append(select)
-			if select in GameManager.npc:
-				GameManager.npc.append(selections)
-	print(selections)
+			if select not in GameManager.npc:
+				#select.npc_moving.connect(update_npc_movement)
+
+				GameManager.npc.append(select)
 	
+func update_npc_movement(last_pos:Vector2i,current_pos:Vector2i):
+	pass
+	#astar.getAStarGrid2D().set_point_solid(last_pos, false)
+	#astar.getAStarGrid2D().set_point_solid(current_pos)

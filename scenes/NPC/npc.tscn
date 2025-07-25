@@ -1,7 +1,17 @@
-[gd_scene load_steps=29 format=3 uid="uid://di8ba6bffnham"]
+[gd_scene load_steps=34 format=3 uid="uid://di8ba6bffnham"]
 
 [ext_resource type="Script" uid="uid://cpya4dj8djhk2" path="res://scenes/NPC/npc.gd" id="1_0c0is"]
 [ext_resource type="Texture2D" uid="uid://dodtkrok2efp5" path="res://assets/NPC/char_a_p1_0bas_humn_v00.png" id="1_36vut"]
+[ext_resource type="Texture2D" uid="uid://6dmoxvb2fm16" path="res://assets/NPC/char_a_pONE1_0bas_humn_v00.png" id="2_lwet7"]
+[ext_resource type="BehaviorTree" uid="uid://bpfa17r6rbkca" path="res://ai/trees/npc.tres" id="4_ehwui"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5kf1"]
+atlas = ExtResource("2_lwet7")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3lda"]
+atlas = ExtResource("2_lwet7")
+region = Rect2(64, 192, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4jjfo"]
 atlas = ExtResource("1_36vut")
@@ -103,6 +113,17 @@ region = Rect2(320, 320, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_a5kf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u3lda")
+}],
+"loop": true,
+"name": &"ability",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_4jjfo")
 }, {
 "duration": 1.0,
@@ -195,16 +216,32 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0c0is"]
-radius = 15.2971
+radius = 8.0
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_c4wbl"]
 
 [node name="NPC" type="CharacterBody2D" groups=["npc"]]
 script = ExtResource("1_0c0is")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a5kf1")
-animation = &"moving_left"
+animation = &"ability"
+frame_progress = 0.00414852
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 process_mode = 1
-position = Vector2(0, -2)
+position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_0c0is")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 16.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
+debug_use_custom = true
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("4_ehwui")
+blackboard_plan = SubResource("BlackboardPlan_c4wbl")

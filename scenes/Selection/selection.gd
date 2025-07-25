@@ -2,6 +2,7 @@ extends Area2D
 @onready var shape: Shape2D = $CollisionShape2D.shape
 @onready var color_rect: ColorRect = $ColorRect
 @onready var collision_shape_2d_2: CollisionShape2D = $CollisionShape2D2
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 
 var start_pos := Vector2.ZERO
@@ -20,6 +21,8 @@ func _unhandled_input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
 				start_pos = get_global_mouse_position()
+				collision_shape_2d_2.disabled= false
+				collision_shape_2d.disabled= false
 				collision_shape_2d_2.global_position = start_pos
 				select_npcs()
 				
@@ -33,6 +36,9 @@ func _unhandled_input(event):
 				select_npcs()
 				shape.extents = Vector2.ZERO
 				hide()
+				collision_shape_2d_2.disabled= true
+				collision_shape_2d.disabled= true
+				
 
 	elif event is InputEventMouseMotion and dragging:
 		var current_pos = get_global_mouse_position()

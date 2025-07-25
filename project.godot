@@ -28,6 +28,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
 window/vsync/vsync_mode=0
 
+[editor_plugins]
+
+enabled=PackedStringArray()
+
 [global_group]
 
 building=""

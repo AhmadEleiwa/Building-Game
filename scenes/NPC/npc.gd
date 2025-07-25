@@ -1,68 +1,75 @@
 extends CharacterBody2D
-
-@export var speed: float = 80.0
-@export var cell_size: Vector2 = Vector2(64, 64) # Tile size
-@export var tilemap_position: Vector2 = Vector2.ZERO # TileMap world offset
-
+class_name NPC
+@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+@export var speed: float = 100.0
+@onready var bt_player: BTPlayer = $BTPlayer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-var tile_map: TileMapLayer
-var path: Array[Vector2i] = []
+@export var tree_tilemap:TileMapLayer;
+@export var work_at_building: Building
 
-var direction: Vector2i = Vector2i.ZERO
-
-func set_path(new_path: Array[Vector2i], new_tile_map: TileMapLayer) -> void:
-	path = new_path
-	tile_map = new_tile_map
-
-
-func _process(delta: float) -> void:
-	if path.is_empty() or tile_map == null:
-		velocity = Vector2.ZERO
-		_update_animation(Vector2.ZERO)
-		return
-
-	var avoidance = _avoid_npcs(GameManager.npc)
-	var target_tile = path.front()
-	var target_world_pos: Vector2 = tile_map.map_to_local(target_tile)
-	
-	# Compute desired direction and velocity
-	var desired_direction = (target_world_pos - global_position).normalized()
-	var desired_velocity = desired_direction * speed
-	
-	# Safe velocity (applying avoidance force)
-	var safe_velocity = (desired_direction + avoidance).normalized() * speed
-	velocity = safe_velocity
-
-	# Arrived at target tile
-	if global_position.distance_to(target_world_pos) < 4.0:
-		path.pop_front()
-		if path.is_empty():
-			velocity = Vector2.ZERO
-
-	_update_animation(velocity)
+enum Tasks{
+	IDLE,
+	WOOD_CUTEER,
+}
+@export var current_task:Tasks= Tasks.IDLE
+func _ready() -> void:
+	# Optional callback if you use it
+	nav_agent.velocity_computed.connect(_on_velocity_computed)
 
 func _physics_process(delta: float) -> void:
-	move_and_slide()
-
-func _update_animation(movement: Vector2) -> void:
-	if movement.length() == 0:
-		animated_sprite.stop()
+	if nav_agent.is_navigation_finished():
 		return
-
-	if abs(movement.x) > abs(movement.y):
-		animated_sprite.play("moving_right" if movement.x > 0 else "moving_left")
 	else:
-		animated_sprite.play("moving_down" if movement.y > 0 else "moving_top")
+		var direction = (nav_agent.get_next_path_position() -global_position).normalized()
+		var indended_velocity = direction * speed
+		nav_agent.set_velocity(indended_velocity)
+		
+		play_animation(direction)
+	#move_and_slide()
+func play_animation(direction: Vector2):
+	if abs(direction.x) > abs(direction.y):
+		if direction.x > 0:
+			animated_sprite.play("moving_right")
+		else:
+			animated_sprite.play("moving_left")
+	else:
+		if direction.y > 0:
+			animated_sprite.play("moving_down")
+		else:
+			animated_sprite.play("moving_top")
+func set_target(pos: Vector2) -> void:
+	nav_agent.target_position = pos
+	
+func is_npc_moving() -> bool:
+	if nav_agent.is_navigation_finished():
+		return false
+	#nav_agent.neighbor_distance
+	var next_path_pos = nav_agent.get_next_path_position()
+	return not global_position.is_equal_approx(next_path_pos)
 
-func _avoid_npcs(npcs: Array) -> Vector2:
-	var avoidance_force = Vector2.ZERO
-	for npc in npcs:
-		if npc == self:
+func _on_velocity_computed(safe_velocity: Vector2) -> void:
+	# You can use this instead of manual movement if you prefer:
+	print(safe_velocity)
+	velocity = safe_velocity
+	move_and_slide()
+func find_closest_tree() -> Vector2:
+	var closest_position: Vector2 = Vector2.ZERO
+	var shortest_distance: float = INF
+
+	var origin_tile = tree_tilemap.local_to_map(tree_tilemap.to_local(global_position))
+
+	# Loop over all used cells in the tilemap
+	for tile in tree_tilemap.get_used_cells():  # Assuming layer 0
+		var tile_data = tree_tilemap.get_cell_tile_data( tile)
+		if tile_data == null:
 			continue
-		var to_npc = global_position - npc.global_position
-		var distance = to_npc.length()
-		if distance < 32.0 and distance > 0:
-			# Avoid stronger the closer the npc
-			avoidance_force += to_npc.normalized() / distance
-	return avoidance_force * 30.0 # Tune multiplier for strength
+		
+		var tile_world_pos = tree_tilemap.to_global(tree_tilemap.map_to_local(tile))
+		var dist = global_position.distance_squared_to(tile_world_pos)
+
+		if dist < shortest_distance:
+			shortest_distance = dist
+			closest_position = tile_world_pos
+
+	return closest_position

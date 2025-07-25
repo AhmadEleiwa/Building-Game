@@ -1,13 +1,11 @@
 extends Building
+class_name WoodCutter
 
-var time_accumulator := 0.0
-@export var gather_time: int = 5
-func _process(delta: float) -> void:
-	time_accumulator += delta
-	if time_accumulator >= gather_time:
-		collect_wood()
-		time_accumulator = 0.0	
-func collect_wood():
-	print("fk")
-	if state == GameManager.StrucutureState.CONSTRUCTION:	
-		GameManager.add_wood(50)
+func _ready() -> void:
+	print("fking nigga")
+
+
+func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		GameManager.selected_npc[0].work_at_building = self
+		GameManager.selected_npc[0].current_task = NPC.Tasks.WOOD_CUTEER

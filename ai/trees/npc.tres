@@ -1,0 +1,76 @@
+[gd_resource type="BehaviorTree" load_steps=26 format=3 uid="uid://bpfa17r6rbkca"]
+
+[ext_resource type="Script" uid="uid://day60tatxvs6x" path="res://ai/tasks/GetClosestTree.gd" id="1_2b0tu"]
+[ext_resource type="Script" uid="uid://ckqbiy28ij6uh" path="res://ai/tasks/IsTileMapNoNull.gd" id="1_so0uu"]
+[ext_resource type="Script" uid="uid://cql6lxydlybeq" path="res://ai/tasks/CheckWorkAtBuilding.gd" id="2_1l1bu"]
+[ext_resource type="Script" uid="uid://3ckgv2kxvpx0" path="res://ai/tasks/GoToTree.gd" id="3_387kw"]
+[ext_resource type="Script" uid="uid://bf0eruvgg1cwe" path="res://ai/tasks/ChoppClosestTree.gd" id="4_78wb1"]
+[ext_resource type="Script" uid="uid://cncy5lsdh20y3" path="res://ai/tasks/CheckTreeExist.gd" id="4_khe27"]
+[ext_resource type="Script" uid="uid://dbvay4hx0isfd" path="res://ai/tasks/GoToCutterBulding.gd" id="5_ft6dg"]
+[ext_resource type="Script" uid="uid://bhrn452rbo1mp" path="res://ai/tasks/DeliverWood.gd" id="7_sraln"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_lpdai"]
+
+[sub_resource type="BTCondition" id="BTCondition_387kw"]
+script = ExtResource("1_so0uu")
+
+[sub_resource type="BTCondition" id="BTCondition_sraln"]
+script = ExtResource("2_1l1bu")
+
+[sub_resource type="BTSequence" id="BTSequence_2b0tu"]
+custom_name = "Checkers"
+children = [SubResource("BTCondition_387kw"), SubResource("BTCondition_sraln")]
+
+[sub_resource type="BTAction" id="BTAction_78wb1"]
+script = ExtResource("1_2b0tu")
+closes_tree_var = &"closest_tree"
+
+[sub_resource type="BTAction" id="BTAction_nsq48"]
+script = ExtResource("3_387kw")
+closest_tree = &"closest_tree"
+
+[sub_resource type="BTWait" id="BTWait_u5yni"]
+duration = 5.0
+
+[sub_resource type="BTAction" id="BTAction_8txrs"]
+script = ExtResource("4_78wb1")
+closest_tree = &"closest_tree"
+was_chopping = &"was_chopping"
+
+[sub_resource type="BTAction" id="BTAction_mywps"]
+script = ExtResource("5_ft6dg")
+
+[sub_resource type="BTAction" id="BTAction_1pv20"]
+script = ExtResource("7_sraln")
+wood_amount = 10
+
+[sub_resource type="BTSequence" id="BTSequence_khe27"]
+custom_name = "ChoppingProcess"
+children = [SubResource("BTAction_78wb1"), SubResource("BTAction_nsq48"), SubResource("BTWait_u5yni"), SubResource("BTAction_8txrs"), SubResource("BTAction_mywps"), SubResource("BTAction_1pv20")]
+
+[sub_resource type="BTCondition" id="BTCondition_nsq48"]
+script = ExtResource("4_khe27")
+closes_tree_var = &"closest_tree"
+was_chopping = &"was_chopping"
+
+[sub_resource type="BTParallel" id="BTParallel_u5yni"]
+children = [SubResource("BTSequence_khe27"), SubResource("BTCondition_nsq48")]
+
+[sub_resource type="BTSequence" id="BTSequence_so0uu"]
+custom_name = "WoodCutting"
+children = [SubResource("BTParallel_u5yni")]
+
+[sub_resource type="BTSequence" id="BTSequence_387kw"]
+custom_name = "WoodCutting"
+children = [SubResource("BTSequence_2b0tu"), SubResource("BTSequence_so0uu")]
+
+[sub_resource type="BTSelector" id="BTSelector_ft6dg"]
+children = [SubResource("BTSequence_387kw")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_10nmm"]
+forever = true
+children = [SubResource("BTSelector_ft6dg")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_lpdai")
+root_task = SubResource("BTRepeat_10nmm")

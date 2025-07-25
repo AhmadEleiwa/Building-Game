@@ -25,7 +25,7 @@ var StorageCapacity:int = 300;
 var CurrentFood:int = 100;
 var CurrentWood:int = 200;
 
-signal on_construct_buidling
+
 func is_building_exist(struct_name:String):
 	return STRUCTURES_REQUIRMENTS.get(struct_name) != null
 
@@ -45,7 +45,7 @@ func add_wood( amount:int):
 func lose_wood( amount:int):
 	CurrentWood = clamp(CurrentWood - amount,0, StorageCapacity )
 
-
+signal on_construct_buidling(coords:Array[Vector2i])
 ## take structure_name and return a massage and the status
 ## {massage:String, status:bool}
 func is_strucutures_match_requirment(structure_name:String) -> Dictionary :
@@ -75,10 +75,12 @@ func add_building(building:Building, coords:Vector2i):
 	
 	var size= building.get_node('base_grid').global_scale
 	print(size)
+	var coords_to:Array[Vector2i]=  []
 	for x in range(0, size.x+1,1):
 		for y in range(0, size.y+1,1):
 			var coord = Vector2i(coords.x -x, coords.y-y)
 			buildings_coords.append(coord)
+			coords_to.append(coord)
 	print(buildings_coords)
-	on_construct_buidling.emit()
+	on_construct_buidling.emit(coords_to)
 		

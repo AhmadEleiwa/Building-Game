@@ -27,7 +27,6 @@ func _input(event) -> void:
 				GameManager.construct(structure_name)
 				var coord = tileMap.local_to_map(tileMap.to_local(selected.global_position))
 				GameManager.add_building(selected,coord)
-				tileMap.notify_runtime_tile_data_update()
 				selected.changeState(GameManager.StrucutureState.CONSTRUCTION)
 				selected.get_node('Area2D').get_node('CollisionShape2D').disabled  = false
 				selected =null
@@ -67,6 +66,7 @@ func build(struct_name:String ):
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	other_colisions+=1
 	base_grid.play("cant_build")
+	print(body)
 	can_build = false
 
 
