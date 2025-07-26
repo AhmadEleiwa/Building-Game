@@ -6,6 +6,14 @@ const STRUCTURES_REQUIRMENTS = {
 	"WoodCutter": {"wood": 50, "food":0, "required_buildings":["Storage"]},
 	"Farm": {"wood": 100, "food":50, "required_buildings":["Storage"]},
 }
+
+enum StrucutureState{
+	CONSTRUCTION,
+	SELECTION
+}
+
+
+
 var buildings = []
 var buildings_coords:Array[Vector2i] = []
 var building_states = {
@@ -16,10 +24,7 @@ var building_states = {
 }
 var npc: Array[CharacterBody2D] = []
 var selected_npc: Array[CharacterBody2D] = []
-enum StrucutureState{
-	CONSTRUCTION,
-	SELECTION
-}
+
 var StorageCapacity:int = 300;
 
 var CurrentFood:int = 100;

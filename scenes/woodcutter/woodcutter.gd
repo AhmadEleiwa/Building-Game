@@ -7,5 +7,7 @@ func _ready() -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if GameManager.selected_npc.is_empty():
+			return
 		GameManager.selected_npc[0].work_at_building = self
 		GameManager.selected_npc[0].current_task = NPC.Tasks.WOOD_CUTEER

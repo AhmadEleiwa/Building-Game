@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://bpfa17r6rbkca"]
+[gd_resource type="BehaviorTree" load_steps=52 format=3 uid="uid://bpfa17r6rbkca"]
 
 [ext_resource type="Script" uid="uid://day60tatxvs6x" path="res://ai/tasks/GetClosestTree.gd" id="1_2b0tu"]
 [ext_resource type="Script" uid="uid://ckqbiy28ij6uh" path="res://ai/tasks/IsTileMapNoNull.gd" id="1_so0uu"]
@@ -9,6 +9,14 @@
 [ext_resource type="Script" uid="uid://dbvay4hx0isfd" path="res://ai/tasks/GoToCutterBulding.gd" id="5_ft6dg"]
 [ext_resource type="Script" uid="uid://bhrn452rbo1mp" path="res://ai/tasks/DeliverWood.gd" id="7_sraln"]
 [ext_resource type="Script" uid="uid://ner5jqgv8mwf" path="res://ai/tasks/CheckFarmer.gd" id="9_u5yni"]
+[ext_resource type="Script" uid="uid://f7ruyoshtewj" path="res://ai/tasks/GoToFarm.gd" id="10_u5yni"]
+[ext_resource type="Script" uid="uid://cfmx375nyj80f" path="res://ai/tasks/WaitUntillFarmFullyGrew.gd" id="11_8txrs"]
+[ext_resource type="Script" uid="uid://bffue0q7py5al" path="res://ai/tasks/Harvesting.gd" id="12_mywps"]
+[ext_resource type="Script" uid="uid://dh58u8djegntg" path="res://ai/tasks/GoToStorage.gd" id="13_1pv20"]
+[ext_resource type="Script" uid="uid://c0mheoe8sxd3y" path="res://ai/tasks/GetClosestStorage.gd" id="13_5a506"]
+[ext_resource type="Script" uid="uid://dx558u7tivld2" path="res://ai/tasks/StoreInStorage.gd" id="15_llaco"]
+[ext_resource type="Script" uid="uid://2fpnpx2fx1pv" path="res://ai/tasks/RandomePosition.gd" id="16_o78uj"]
+[ext_resource type="Script" uid="uid://b2hpju3rvlyvn" path="res://ai/tasks/MoveIntoTarget.gd" id="17_un25s"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_lpdai"]
 
@@ -72,13 +80,61 @@ script = ExtResource("9_u5yni")
 custom_name = "Checkers"
 children = [SubResource("BTCondition_8txrs")]
 
+[sub_resource type="BTAction" id="BTAction_5a506"]
+script = ExtResource("10_u5yni")
+
+[sub_resource type="BTAction" id="BTAction_llaco"]
+script = ExtResource("11_8txrs")
+
+[sub_resource type="BTWait" id="BTWait_mywps"]
+duration = 2.0
+
+[sub_resource type="BTAction" id="BTAction_o78uj"]
+script = ExtResource("12_mywps")
+
+[sub_resource type="BTAction" id="BTAction_rbxii"]
+script = ExtResource("13_5a506")
+building_pos = &"building_pos"
+
+[sub_resource type="BTAction" id="BTAction_un25s"]
+script = ExtResource("13_1pv20")
+building_pos = &"building_pos"
+
+[sub_resource type="BTAction" id="BTAction_67ndc"]
+script = ExtResource("15_llaco")
+
 [sub_resource type="BTSequence" id="BTSequence_8txrs"]
+children = [SubResource("BTAction_5a506"), SubResource("BTAction_llaco"), SubResource("BTWait_mywps"), SubResource("BTAction_o78uj"), SubResource("BTAction_rbxii"), SubResource("BTAction_un25s"), SubResource("BTAction_67ndc")]
 
 [sub_resource type="BTSequence" id="BTSequence_u5yni"]
+custom_name = "Farming"
 children = [SubResource("BTSequence_nsq48"), SubResource("BTSequence_8txrs")]
 
+[sub_resource type="BTAction" id="BTAction_qmw1r"]
+script = ExtResource("16_o78uj")
+rand_pos = &"rand_pos"
+step_distance = 80.0
+
+[sub_resource type="BTAction" id="BTAction_10nmm"]
+script = ExtResource("17_un25s")
+rand_pos = &"rand_pos"
+
+[sub_resource type="BTSequence" id="BTSequence_wktu6"]
+custom_name = "RandomMovement"
+children = [SubResource("BTAction_qmw1r"), SubResource("BTAction_10nmm")]
+metadata/_weight_ = 0.72
+
+[sub_resource type="BTRandomWait" id="BTRandomWait_toeif"]
+
+[sub_resource type="BTSequence" id="BTSequence_jkm0k"]
+children = [SubResource("BTRandomWait_toeif")]
+
+[sub_resource type="BTProbabilitySelector" id="BTProbabilitySelector_un25s"]
+custom_name = "idle"
+children = [SubResource("BTSequence_wktu6"), SubResource("BTSequence_jkm0k")]
+
 [sub_resource type="BTSelector" id="BTSelector_ft6dg"]
-children = [SubResource("BTSequence_387kw"), SubResource("BTSequence_u5yni")]
+children = [SubResource("BTSequence_387kw"), SubResource("BTSequence_u5yni"), SubResource("BTProbabilitySelector_un25s")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_10nmm"]
 forever = true

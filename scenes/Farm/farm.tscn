@@ -63,7 +63,8 @@ animations = [{
 z_as_relative = false
 script = ExtResource("2_a764d")
 current_stage = 0
-growth_time = 10
+total_food = 100
+amount_of_food_per_time = 50
 
 [node name="Sprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_3rjue")
@@ -72,3 +73,8 @@ autoplay = "lvl1"
 frame_progress = 0.0915123
 
 [node name="CollisionShape2D" parent="Area2D" index="0" groups=["building"]]
+
+[node name="Timer" type="Timer" parent="." index="3"]
+wait_time = 10.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

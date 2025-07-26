@@ -32,6 +32,5 @@ autoplay = "default"
 offset = Vector2(0, 0)
 
 [node name="CollisionShape2D" parent="Area2D" index="0" groups=["building"]]
-position = Vector2(5, 12)
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

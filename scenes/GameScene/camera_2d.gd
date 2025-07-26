@@ -3,11 +3,11 @@ extends Camera2D
 var dragging := false
 var drag_start := Vector2.ZERO
 var drag_speed := 0.5
-var zoom_limit := Vector2(.1, 2)
+var zoom_limit := Vector2(1, 2)
 
 var target_zoom := Vector2(1, 1)
 var zoom_speed := 5.0 # Smoothness factor
-@export var shader_param_name := "light_position"
+
 func _ready():
 	zoom = target_zoom
 

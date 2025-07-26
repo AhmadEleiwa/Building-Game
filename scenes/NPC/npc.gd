@@ -14,8 +14,12 @@ enum Tasks{
 	FARMER
 }
 @export var current_task:Tasks= Tasks.IDLE
+
+var inventory:ResourceData 
+
 func _ready() -> void:
 	# Optional callback if you use it
+	inventory = ResourceData.new()
 	nav_agent.velocity_computed.connect(_on_velocity_computed)
 
 func _physics_process(delta: float) -> void:
@@ -73,3 +77,13 @@ func find_closest_tree() -> Vector2:
 			closest_position = tile_world_pos
 
 	return closest_position
+
+func deliver_resource():
+	if inventory.type == ResourceData.ResourceType.NONE:
+		return
+	if inventory.type == ResourceData.ResourceType.WOOD:
+		GameManager.add_wood(inventory.amount )
+	if inventory.type == ResourceData.ResourceType.FOOD:
+		GameManager.add_food(inventory.amount )
+	inventory.clear()
+			
